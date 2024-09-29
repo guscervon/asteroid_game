@@ -10,7 +10,13 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode(size=(SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
+
+    updatetables = pygame.sprite.Group()
+    drawtables = pygame.sprite.Group()
+    Player.containers = (updatetables, drawtables)
+    
     player = Player(x, y)
+
 
     dt = 0
     background_color = (0,0,0) # RGB sequence for black
@@ -21,10 +27,13 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
-        player.update(dt)
+        for update_item in updatetables:
+            update_item.update(dt)
 
         screen.fill(color=background_color)
-        player.draw(screen)
+        for draw_item in drawtables:
+            draw_item.draw(screen)
+
         pygame.display.flip() # Refresh screen
         
         dt = clock.tick(60) / 1000
