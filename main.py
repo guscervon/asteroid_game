@@ -1,6 +1,9 @@
 from constants import *
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 import pygame
+import sys
 
 def main():
 
@@ -13,10 +16,14 @@ def main():
 
     updatetables = pygame.sprite.Group()
     drawtables = pygame.sprite.Group()
-    Player.containers = (updatetables, drawtables)
-    
-    player = Player(x, y)
+    asteroids = pygame.sprite.Group()
 
+    Asteroid.containers = (asteroids, updatetables, drawtables)
+    AsteroidField.containers = updatetables
+    asteroidfield = AsteroidField()
+
+    Player.containers = (updatetables, drawtables)
+    player = Player(x, y)
 
     dt = 0
     background_color = (0,0,0) # RGB sequence for black
@@ -29,6 +36,10 @@ def main():
 
         for update_item in updatetables:
             update_item.update(dt)
+
+        for asteroid_item in asteroids:
+            if asteroid_item.check_collision(player):
+                sys.exit("Game over!")
 
         screen.fill(color=background_color)
         for draw_item in drawtables:
