@@ -2,6 +2,7 @@ from constants import *
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shot
 import pygame
 import sys
 
@@ -17,6 +18,7 @@ def main():
     updatetables = pygame.sprite.Group()
     drawtables = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
     Asteroid.containers = (asteroids, updatetables, drawtables)
     AsteroidField.containers = updatetables
@@ -24,6 +26,9 @@ def main():
 
     Player.containers = (updatetables, drawtables)
     player = Player(x, y)
+
+    Shot.containers = (shots, updatetables, drawtables)
+
 
     dt = 0
     background_color = (0,0,0) # RGB sequence for black
